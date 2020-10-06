@@ -16,15 +16,16 @@ else ifeq ($(UNAME_SYS), Linux)
 endif
 
 DISTRO_NAME = $(shell lsb_release -si)
-ifeq ($(DISTRO_NAME), Debian)
-	CFLAGS := $(CFLAGS) $(shell pkg-config --cflags blas-atlas)
-	LIBS := $(LIBS) $(shell pkg-config --libs blas-atlas)
-else ifeq ($(DISTRO_NAME), CentOS)
+ifeq ($(DISTRO_NAME), CentOS)
 	CFLAGS := $(CFLAGS) $(shell pkg-config --cflags cblas atlas)
 	LIBS := $(LIBS) $(shell pkg-config --libs cblas atlas)
 else ifeq ($(DISTRO_NAME), Arch)
 	CFLAGS := $(CFLAGS) $(shell pkg-config --cflags cblas)
 	LIBS := $(LIBS) $(shell pkg-config --libs cblas blas)
+# Debian or Ubuntu
+else
+	CFLAGS := $(CFLAGS) $(shell pkg-config --cflags blas-atlas)
+	LIBS := $(LIBS) $(shell pkg-config --libs blas-atlas)
 endif
 
 
