@@ -4,6 +4,8 @@
 
 #ifdef Debian
     #include <x86_64-linux-gnu/cblas.h>
+#elif defined(CentOS)
+    #include <cblas/cblas.h>
 #elif defined(Arch)
     #include <cblas.h>
 #else
