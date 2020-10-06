@@ -15,9 +15,12 @@ else ifeq ($(UNAME_SYS), Linux)
 	CFLAGS ?= -O3 -std=c99 -finline-functions -Wall -Wmissing-prototypes
 endif
 
+DISTRO_NAME := $(shell lsb_release -si)
+
 $(C_SRC_OUTPUT): *.c
 	$(CC) $(CFLAGS) *.c -g -fPIC -shared -o $(C_SRC_OUTPUT) -I $(ERL_INCLUDE_DIR) \
-		$(C_SRC_OPTS) -L/usr/lib -l:libcblas.so.3 -l:libatlas.so.3
+		$(C_SRC_OPTS) -L/usr/lib -l:libcblas.so.3 -l:libatlas.so.3 \
+		-D$(DISTRO_NAME)
 
 clean:
 	rm -f $(C_SRC_OUTPUT)

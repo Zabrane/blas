@@ -1,7 +1,14 @@
 #include <stdio.h>
 #include <string.h>
 #include "erl_nif.h"
-#include <atlas/cblas.h>
+
+#ifdef Debian
+    #include <x86_64-linux-gnu/cblas.h>
+#elif defined(Arch)
+    #include <cblas.h>
+#else
+    #include <atlas/cblas.h>
+#endif
 
 #define MAX(a,b) (((a)>(b))?(a):(b))
 
