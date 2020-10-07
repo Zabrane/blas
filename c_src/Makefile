@@ -15,19 +15,8 @@ else ifeq ($(UNAME_SYS), Linux)
 	CFLAGS := -O3 -std=c99 -finline-functions -Wall -Wmissing-prototypes
 endif
 
-DISTRO_NAME = $(shell lsb_release -si)
-ifeq ($(DISTRO_NAME), CentOS)
-	CFLAGS := $(CFLAGS) $(shell pkg-config --cflags cblas atlas)
-	LIBS := $(LIBS) $(shell pkg-config --libs cblas atlas)
-else ifeq ($(DISTRO_NAME), Arch)
-	CFLAGS := $(CFLAGS) $(shell pkg-config --cflags cblas)
-	LIBS := $(LIBS) $(shell pkg-config --libs cblas blas)
-# Debian or Ubuntu
-else
-	CFLAGS := $(CFLAGS) $(shell pkg-config --cflags blas-atlas)
-	LIBS := $(LIBS) $(shell pkg-config --libs blas-atlas)
-endif
-
+CFLAGS := $(CFLAGS) $(shell pkg-config --cflags blas)
+LIBS := $(LIBS) $(shell pkg-config --libs blas)
 
 $(C_SRC_OUTPUT): *.c
 	$(CC) $(CFLAGS) *.c -g -fPIC -shared -o $(C_SRC_OUTPUT) -I $(ERL_INCLUDE_DIR) \
